@@ -1,0 +1,21 @@
+@import "assets/fonts/Industry/industryFont.scss";
+@import "grid-variables";
+@import "visibility-mixins";
+@import "grid-mixins";
+@import "grid";
+@import "visibility"; // Visibility last for precedence
+
+body {
+  margin: 0;
+  font-family: "Industry", -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // imitate dark theme of screenshot
+  background-color: #121212;
+  color: #ffffff;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
