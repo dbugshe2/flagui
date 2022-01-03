@@ -63,7 +63,7 @@ DropDown.defaultProps = {
 export default DropDown;
 
 export const CustomSelect = (props) => {
-  const { onChange, options, loading, disabled } = props;
+  const { onChange, options, loading, disabled, placeholder } = props;
 
   const _handleChange = (selectedOption) => {
     if (_.isFunction(onChange)) {
@@ -73,12 +73,12 @@ export const CustomSelect = (props) => {
 
   return (
     <Select
-      {...props}
       isDisabled={disabled}
       options={options}
       isLoading={loading}
       styles={customSelectStyles}
       onChange={_handleChange}
+      placeholder={placeholder}
     />
   );
 };
@@ -88,4 +88,5 @@ CustomSelect.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
+  placeholder: PropTypes.string,
 };

@@ -33,13 +33,7 @@ export default class ErrorState extends Component {
           <p className={styles.errorBoundaryLargeText}>OOPS!</p>
           <h2>Sorry, something went wrong</h2>
           <h4>an error has occured</h4>
-          <h6>
-            If you're expriencing this error for the first time, kindly click
-            report error below
-            <br />
-            Try Refreshing the page, and try again
-          </h6>
-
+          <h6>Try Refreshing the page, and try again</h6>
           <div>
             <Button onClick={this.handleRefresh}>Refresh Page</Button>
           </div>

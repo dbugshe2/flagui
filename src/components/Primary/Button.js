@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import styles from "./Button.module.scss";
 
 const Button = (props) => {
-  const { children } = props;
-  return <button>{children}</button>;
+  const { children, onClick } = props;
+  return <button onClick={onClick ? onClick : null}>{children}</button>;
 };
 
 Button.propTypes = {};
