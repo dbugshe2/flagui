@@ -5,6 +5,7 @@ import Panel from "components/Container/Panel";
 import Toggle from "components/Toggles/Toggle";
 import Row from "components/Container/Row";
 import Col from "components/Container/Col";
+import ToggleGroup from "components/Toggles/ToggleGroup";
 
 function App() {
   return (
@@ -42,11 +43,36 @@ function App() {
           </Panel>
           <Panel>
             <Toggle
+              additionalValue={4}
+              onAdditionalValueChange={(val) =>
+                console.log("new number value", val)
+              }
               name="notification"
               label="Notifications"
               onChange={(val) => console.log(val)}
             />
           </Panel>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Title text="Settings" />
+          <Panel>
+            <Toggle
+              name="adduser"
+              label="Add User"
+              onChange={(val) => console.log(val)}
+            />
+            <ToggleGroup label="Users" />
+          </Panel>
+        </Col>
+        <Col>
+          <Title text="Settings" />
+          <Panel></Panel>
+        </Col>
+        <Col>
+          <Title text="Alerts" />
+          <Panel></Panel>
         </Col>
       </Row>
     </PageWrapper>

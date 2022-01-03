@@ -5,22 +5,22 @@ const customSelectStyles = {
     };
   },
   container: (provided, state) => {
-    return { ...provided };
+    return { ...provided, padding: 0, margin: 0 };
   },
   control: (provided, state) => {
-    return { ...provided };
+    return { ...provided, height: 15, padding: 2 };
   },
   dropdownIndicator: (provided, state) => {
-    return { ...provided, color: "#3BC552" };
+    return { ...provided, color: "#121212" };
   },
   indicatorsContainer: (provided, state) => {
     return { ...provided };
   },
   indicatorSeparator: (provided, state) => {
-    return { ...provided };
+    return { ...provided, display: "none" };
   },
   input: (provided, state) => {
-    return { ...provided };
+    return { ...provided, fontSize: 12 };
   },
   loadingIndicator: (provided, state) => {
     return { ...provided };
@@ -29,7 +29,7 @@ const customSelectStyles = {
     return { ...provided };
   },
   menu: (provided, state) => {
-    return { ...provided };
+    return { ...provided, fontSize: 12 };
   },
   menuList: (provided, state) => {
     return { ...provided };
@@ -38,13 +38,13 @@ const customSelectStyles = {
     return { ...provided };
   },
   option: (provided, state) => {
-    return { ...provided };
+    return { ...provided, fontSize: 12, color: "#121212" };
   },
   placeholder: (provided, state) => {
-    return { ...provided };
+    return { ...provided, fontSize: 12 };
   },
   singleValue: (provided, state) => {
-    return { ...provided };
+    return { ...provided, fontSize: 12 };
   },
   valueContainer: (provided, state) => {
     return { ...provided };

@@ -1,0 +1,29 @@
+.toggleGroupHeadContainer {
+  position: relative;
+  padding-right: 32px;
+  user-select: none;
+  transition: all 1000ms ease;
+}
+
+.toggleGroupBodyContainer {
+  transition-property: all 100ms ease-in-out;
+}
+
+.toggleGroupBodyContainerVisible {
+  border-top: 1px solid rgba($color: #ececec, $alpha: 0.3);
+  height: 100%;
+}
+
+.toggleGroupBodyContainerHidden {
+  height: 0px;
+  overflow: hidden;
+}
+
+.collapseIcon {
+  position: absolute;
+  top: 18px;
+  right: 4px;
+  height: 18px;
+  width: 18px;
+  transition: all 1000ms ease;
+}
