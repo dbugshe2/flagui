@@ -4,14 +4,18 @@ import styles from "./Switch.module.scss";
 import _ from "lodash";
 
 const Switch = (props) => {
-  const { disabled, name, value, onChange } = props;
+  const { disabled, name, value, checked, onChange } = props;
 
-  const [checked, setChecked] = useState();
+  const [_checked, _setChecked] = useState(checked);
 
   const handleSwitch = () => {
     if (_.isFunction(onChange)) onChange(!checked);
-    setChecked((checkedState) => !checkedState);
+    _setChecked((checkedState) => !checkedState);
   };
+
+  useEffect(() => {
+    _setChecked(checked);
+  }, [checked]);
 
   return (
     <label
@@ -23,12 +27,12 @@ const Switch = (props) => {
       <input type="hidden" name={name} value={value} />
       <span
         className={`${styles.switchTrack} ${
-          checked ? styles.switchTrackChecked : ""
+          _checked ? styles.switchTrackChecked : ""
         }`}
       ></span>
       <span
         className={`${styles.switchButton} ${
-          checked ? styles.switchButtonChecked : ""
+          _checked ? styles.switchButtonChecked : ""
         }`}
       ></span>
     </label>
@@ -40,12 +44,6 @@ Switch.propTypes = {
   name: PropTypes.string,
   onChange: PropTypes.func,
   value: PropTypes.string,
-};
-
-Switch.defaultProps = {
-  disabled: false,
-  onChange: () => {},
-  value: "on",
 };
 
 export default Switch;

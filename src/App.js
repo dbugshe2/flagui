@@ -46,14 +46,12 @@ function App() {
                     name="adduser"
                     label="Add User"
                     onChange={(val) => console.log(val)}
+                    value="on"
                   />
                 </Panel>
                 <Panel>
                   <Toggle
-                    additionalValue={4}
-                    onAdditionalValueChange={(val) =>
-                      console.log("new number value", val)
-                    }
+                    useNumericValue
                     name="notification"
                     label="Notifications"
                     onChange={(val) => console.log(val)}

@@ -1,6 +1,6 @@
 export const userInitialvalues = {
   userAdd: "enable",
-  userEdit: "enable",
+  userEdit: "disable",
   userDelete: "enable",
-  userLimit: "0",
+  userLimit: 3,
 };

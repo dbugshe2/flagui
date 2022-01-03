@@ -7,8 +7,8 @@ import Icon from "components/Primary/Icon";
 import DropDown from "components/Primary/DropDown";
 const Toggle = (props) => {
   const {
-    onValue,
-    offValue,
+    onValue = "on",
+    offValue = "off",
     label,
     disabled,
     // defaultValue,
@@ -22,7 +22,7 @@ const Toggle = (props) => {
   } = props;
 
   const [toggleValue, setToggleValue] = useState();
-  const [numericValue, setNumericValue] = useState(0);
+  const [numericValue, setNumericValue] = useState();
 
   const _handleToggle = (toggledChecked) => {
     if (!toggledChecked) {
@@ -54,9 +54,9 @@ const Toggle = (props) => {
       if (_.isFinite(value)) setToggleValue(onValue);
       return;
     }
-    if (value) setToggleValue(value);
+    setToggleValue(value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, []);
 
   return (
     <div className={styles.toggleWrapper}>
@@ -74,6 +74,7 @@ const Toggle = (props) => {
         <Switch
           disabled={disabled}
           name={name}
+          checked={toggleValue === onValue}
           value={toggleValue}
           onChange={_handleToggle}
         />
@@ -97,14 +98,5 @@ export const TogglePropTypes = {
 };
 
 Toggle.propTypes = TogglePropTypes;
-
-Toggle.defaultProps = {
-  onValue: "on",
-  offValue: "off",
-  disabled: false,
-  label: "untitled",
-  name: "untitled",
-  onChange: () => {},
-};
 
 export default Toggle;

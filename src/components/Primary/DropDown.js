@@ -54,11 +54,6 @@ DropDown.propTypes = {
   limit: PropTypes.number,
   disabled: PropTypes.bool,
 };
-DropDown.defaultProps = {
-  limit: -1,
-  disabled: false,
-  onChange: () => {},
-};
 
 export default DropDown;
 

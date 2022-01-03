@@ -7,6 +7,7 @@ import chevronUp from "assets/img/chevron-up.svg";
 import chevronDown from "assets/img/chevron-down.svg";
 import _ from "lodash";
 import useDidMountEffect from "hooks";
+import Button from "components/Primary/Button";
 
 const ToggleGroup = (props) => {
   const { schema, label, name, onChange, initialValues } = props;
@@ -16,27 +17,25 @@ const ToggleGroup = (props) => {
   const [groupToggleValues, setGroupToggleValues] = useState(initialValues);
 
   const _handleGroupToggle = (value) => {
-    console.log("fuck this: ", value);
     if (value[name] === "on") setGroupCollapsed(false);
     if (value[name] === "off") setGroupCollapsed(true);
   };
+
   const _handleTogglesValuesChange = (valObj) => {
     setGroupToggleValues((oldGroupState) => {
       return { ...oldGroupState, ...valObj };
     });
-    console.log(groupToggleValues);
   };
 
   useEffect(() => {
     if (!_.isEmpty(initialValues)) {
-      setGroupToggleValues(initialValues);
       setGroupCollapsed(false);
     }
   }, [initialValues]);
 
   useEffect(() => {
     if (_.isFunction(onChange)) onChange({ [`${name}`]: groupToggleValues });
-  }, [groupToggleValues, name, onChange]);
+  }, [groupToggleValues]);
 
   return (
     <>
@@ -45,7 +44,7 @@ const ToggleGroup = (props) => {
         <Toggle
           label={label}
           name={name}
-          value={groupCollapsed || _.isEmpty(initialValues) ? "off" : "on"}
+          value={groupCollapsed ? "off" : "on"}
           onChange={_handleGroupToggle}
           onValue="on"
           offValue="off"
@@ -83,8 +82,7 @@ const ToggleGroup = (props) => {
                 limit={toggleObj?.limit}
                 value={
                   groupToggleValues[toggleName] ||
-                  groupToggleValues[toggleObj?.name] ||
-                  ""
+                  groupToggleValues[toggleObj?.name]
                 }
                 onChange={_handleTogglesValuesChange}
               />
