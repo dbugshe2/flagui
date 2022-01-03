@@ -11,45 +11,62 @@ const Toggle = (props) => {
     offValue,
     label,
     disabled,
-    defaultValue,
+    // defaultValue,
     name,
     onChange,
     value,
     useNumericValue,
     limit,
-    additionalValue,
-    onAdditionalValueChange,
+    // additionalValue,
+    // onAdditionalValueChange,
   } = props;
 
-  const [toggleValue, setToggleValue] = useState(defaultValue);
+  const [toggleValue, setToggleValue] = useState();
+  const [numericValue, setNumericValue] = useState(0);
 
-  const _handleToggle = (toggleChecked) => {
-    if (toggleChecked) {
-      if (_.isFunction(onChange)) onChange(onValue);
-      setToggleValue(onValue);
-      return;
-    }
-
-    if (!toggleChecked) {
-      if (_.isFunction(onChange)) onChange(offValue);
+  const _handleToggle = (toggledChecked) => {
+    if (!toggledChecked) {
+      if (_.isFunction(onChange)) onChange({ [`${name}`]: `${offValue}` });
       setToggleValue(offValue);
+    }
+    if (toggledChecked) {
+      // set Toggle only
+      setToggleValue(onValue);
+      // use numeric value instead
+      if (useNumericValue) return;
+      if (_.isFunction(onChange)) onChange({ [`${name}`]: `${onValue}` });
+      return;
     }
   };
 
+  const _handleSetNumericValue = (val) => {
+    if (_.isFinite(val)) {
+      // update hadnler value with numeric value
+      setNumericValue(val);
+      if (_.isFunction(onChange)) onChange({ [`${name}`]: val });
+    }
+    return;
+  };
+
   useEffect(() => {
-    if (defaultValue) setToggleValue(defaultValue);
+    if (useNumericValue) {
+      setNumericValue(value);
+      if (_.isFinite(value)) setToggleValue(onValue);
+      return;
+    }
+    if (value) setToggleValue(value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [value]);
 
   return (
     <div className={styles.toggleWrapper}>
       <Icon />
       <span className={styles.toggleLabel}>{label}</span>
       <div className={styles.toggleControls}>
-        {useNumericValue && !disabled ? (
+        {useNumericValue && toggleValue === onValue ? (
           <DropDown
-            value={additionalValue}
-            onChange={onAdditionalValueChange}
+            value={numericValue}
+            onChange={_handleSetNumericValue}
             disabled={disabled}
             limit={limit}
           />

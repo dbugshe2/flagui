@@ -1,5 +1,6 @@
 .errorBoundaryWrapper {
   background-color: #ececec;
+  color: black;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,7 +11,7 @@
 }
 
 .errorBoundaryLargeText {
-  font-size: 32px;
-  color: #ffffff;
+  font-size: 36px;
+  color: crimson;
   margin: 10px;
 }

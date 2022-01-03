@@ -1,24 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./ToggleGroup.module.scss";
 import Panel from "components/Container/Panel";
 import Toggle, { TogglePropTypes } from "./Toggle";
 import chevronUp from "assets/img/chevron-up.svg";
 import chevronDown from "assets/img/chevron-down.svg";
+import _ from "lodash";
+import useDidMountEffect from "hooks";
 
 const ToggleGroup = (props) => {
-  const { toggles, label, name, onChange, values } = props;
+  const { schema, label, name, onChange, initialValues } = props;
 
   // TODO: create design and logic for ToggleGroup
-  const [groupCollapsed, setGroupCollapsed] = useState(true);
-  const [groupToggleValue, setGroupToggleValue] = useState();
+  const [groupCollapsed, setGroupCollapsed] = useState();
+  const [groupToggleValues, setGroupToggleValues] = useState(initialValues);
 
-  const _handleToggle = () => {
-    setGroupToggleValue((toggleValueState) =>
-      toggleValueState === "on" ? "off" : "on"
-    );
-    setGroupCollapsed((collpasedState) => !collpasedState);
+  const _handleGroupToggle = (value) => {
+    console.log("fuck this: ", value);
+    if (value[name] === "on") setGroupCollapsed(false);
+    if (value[name] === "off") setGroupCollapsed(true);
   };
+  const _handleTogglesValuesChange = (valObj) => {
+    setGroupToggleValues((oldGroupState) => {
+      return { ...oldGroupState, ...valObj };
+    });
+    console.log(groupToggleValues);
+  };
+
+  useEffect(() => {
+    if (!_.isEmpty(initialValues)) {
+      setGroupToggleValues(initialValues);
+      setGroupCollapsed(false);
+    }
+  }, [initialValues]);
+
+  useEffect(() => {
+    if (_.isFunction(onChange)) onChange({ [`${name}`]: groupToggleValues });
+  }, [groupToggleValues, name, onChange]);
 
   return (
     <>
@@ -26,8 +44,9 @@ const ToggleGroup = (props) => {
         {/* head */}
         <Toggle
           label={label}
-          value={groupToggleValue}
-          onChange={_handleToggle}
+          name={name}
+          value={groupCollapsed || _.isEmpty(initialValues) ? "off" : "on"}
+          onChange={_handleGroupToggle}
           onValue="on"
           offValue="off"
         />
@@ -39,7 +58,6 @@ const ToggleGroup = (props) => {
           )}
         </span>
       </div>
-      {/* <hr /> */}
       <div
         className={`${styles.toggleGroupBodyContainer} ${
           groupCollapsed
@@ -48,26 +66,49 @@ const ToggleGroup = (props) => {
         }`}
       >
         {/* body */}
-        <Toggle label="User" />
-        <Toggle label="User Add" />
-        <Toggle label="User Edit" />
-        <Toggle label="User Delete" />
-        <Toggle label="User Limit" useNumericValue limit={10} />
+        {Object.entries(schema).map((toggle, toggleIndex) => {
+          let toggleName = toggle[0];
+          let toggleObj = toggle[1];
+          if (_.isPlainObject(toggleObj) && !_.isEmpty(toggleObj)) {
+            // non-empty plain object to render as toggle
+            return (
+              <Toggle
+                key={`${label}Toggle-${toggleIndex.toString()}`}
+                onValue={toggleObj?.onValue || undefined}
+                offValue={toggleObj?.offValue || undefined}
+                label={toggleObj?.label || undefined}
+                name={toggleObj?.name || toggleName}
+                disabled={toggleObj?.disabled || false}
+                useNumericValue={toggleObj?.useNumericValue || false}
+                limit={toggleObj?.limit}
+                value={
+                  groupToggleValues[toggleName] ||
+                  groupToggleValues[toggleObj?.name] ||
+                  ""
+                }
+                onChange={_handleTogglesValuesChange}
+              />
+            );
+          }
+
+          return false;
+        })}
       </div>
     </>
   );
 };
 
 ToggleGroup.propTypes = {
-  toggles: PropTypes.arrayOf(PropTypes.shape(TogglePropTypes)),
+  schema: PropTypes.object,
   label: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func,
-  values: PropTypes.array,
+  initialValues: PropTypes.object,
 };
 ToggleGroup.defaultProps = {
-  toggles: [],
+  schema: {},
   onChange: () => {},
+  initialValues: {},
 };
 
 export default ToggleGroup;
