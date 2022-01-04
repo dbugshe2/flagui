@@ -13,4 +13,5 @@ export const generalInitialvalues = {
 export const alertInitialvalues = {
   alertManager: "on",
   profileManager: "off",
+  profileManagment: "off",
 };

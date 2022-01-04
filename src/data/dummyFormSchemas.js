@@ -12,7 +12,7 @@ const userSettingsSchema = {
       onValue: "enable",
       offValue: "disabled",
       label: "Notification",
-      name: "nofification",
+      name: "notification",
     },
     {
       label: "User Management",
@@ -54,8 +54,8 @@ const generalSettingsSchema = {
   formId: "general",
   fields: [
     {
-      label: "Case Management",
-      name: "caseManagement",
+      label: "Case Managment",
+      name: "caseManagment",
     },
   ],
 };
@@ -64,6 +64,10 @@ const alertSettingsSchema = {
   formName: "Alerts",
   formId: "alerts",
   fields: [
+    {
+      label: "Profile Manager",
+      name: "profileManager",
+    },
     {
       label: "Alert Manager",
       name: "alertManager",

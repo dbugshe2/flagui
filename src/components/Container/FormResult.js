@@ -6,19 +6,21 @@ import Col from "./Col";
 import Prism from "prismjs";
 
 const FormResult = (props) => {
-  const { data } = props;
+  const { data, schema } = props;
 
   // useEffect(() => {
-  //   Prism.highlightAll()
-  // },[data])
+  //   Prism.highlightAll();
+  // }, [data, schema]);
 
   return (
     <Row>
       <Col>
         <div className={styles.formResultContainer}>
-          <h2>form results go here</h2>
+          <h2>{schema?.formName || "Form"} Results</h2>
           <pre className={`${styles.formResultContent}`}>
-            <code className="language-js">{JSON.stringify(data, null, 2)}</code>
+            <code className="language-js language-json">
+              {JSON.stringify(data, null, 2)}
+            </code>
           </pre>
         </div>
       </Col>

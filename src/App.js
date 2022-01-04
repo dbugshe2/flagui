@@ -21,12 +21,9 @@ import schemas from "data/dummyFormSchemas";
 
 function App() {
   const [formSchemas, setFormSchemas] = useState(dummyFormSchemas);
-  const [formData, setFormData] = useState({});
-
-  const handleFormResultChange = (valObj) => {
-    console.log(valObj);
-    setFormData(valObj);
-  };
+  const [userFormData, setUserFormData] = useState({});
+  const [generalFormData, setGeneralFormData] = useState({});
+  const [alertFormData, setAlertFormData] = useState({});
 
   return (
     <PageWrapper>
@@ -39,21 +36,21 @@ function App() {
                   title="User"
                   initialValues={userInitialvalues}
                   schema={formSchemas.userSettingsSchema}
-                  onChange={handleFormResultChange}
+                  onChange={setUserFormData}
                 />
               </Col>
               <Col>
                 <ToggleForm
                   schema={formSchemas.generalSettingsSchema}
                   initialValues={generalInitialvalues}
-                  onChange={handleFormResultChange}
+                  onChange={setGeneralFormData}
                 />
               </Col>
               <Col>
                 <ToggleForm
                   schema={formSchemas.alertSettingsSchema}
                   initialValues={alertInitialvalues}
-                  onChange={handleFormResultChange}
+                  onChange={setAlertFormData}
                 />
               </Col>
             </Row>
@@ -71,7 +68,26 @@ function App() {
         }
       />
       {/* form Results */}
-      <FormResult data={formData} />
+      <Row>
+        <Col>
+          <FormResult
+            schema={formSchemas.userSettingsSchema}
+            data={userFormData}
+          />
+        </Col>
+        <Col>
+          <FormResult
+            schema={formSchemas.generalSettingsSchema}
+            data={generalFormData}
+          />
+        </Col>
+        <Col>
+          <FormResult
+            schema={formSchemas.alertSettingsSchema}
+            data={alertFormData}
+          />
+        </Col>
+      </Row>
     </PageWrapper>
   );
 }
