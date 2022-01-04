@@ -1,24 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./Toggle.module.scss";
 import _ from "lodash";
 import Switch from "components/Primary/Switch";
 import Icon from "components/Primary/Icon";
 import DropDown from "components/Primary/DropDown";
+
 const Toggle = (props) => {
   const {
     onValue = "on",
     offValue = "off",
     label,
     disabled,
-    // defaultValue,
     name,
     onChange,
     value,
     useNumericValue,
     limit,
-    // additionalValue,
-    // onAdditionalValueChange,
   } = props;
 
   const [toggleValue, setToggleValue] = useState();
@@ -54,9 +52,9 @@ const Toggle = (props) => {
       if (_.isFinite(value)) setToggleValue(onValue);
       return;
     }
-    setToggleValue(value);
+    if (value) setToggleValue(value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [value]);
 
   return (
     <div className={styles.toggleWrapper}>

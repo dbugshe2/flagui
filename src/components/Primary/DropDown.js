@@ -35,7 +35,6 @@ const DropDown = (props) => {
   }, [value]);
 
   return (
-    // TODO: customise default select component
     <div className={styles.dropdownWrapper}>
       <CustomSelect
         onChange={_handleNumberSelect}
@@ -58,7 +57,7 @@ DropDown.propTypes = {
 export default DropDown;
 
 export const CustomSelect = (props) => {
-  const { onChange, options, loading, disabled, placeholder } = props;
+  const { onChange, options, value, loading, disabled, placeholder } = props;
 
   const _handleChange = (selectedOption) => {
     if (_.isFunction(onChange)) {
@@ -73,6 +72,7 @@ export const CustomSelect = (props) => {
       isLoading={loading}
       styles={customSelectStyles}
       onChange={_handleChange}
+      value={value || undefined}
       placeholder={placeholder}
     />
   );

@@ -1,15 +1,44 @@
+.formSchemasContainer {
+  position: relative;
+}
+// .formSchemasEditor,
+// .formSchemasHighlighter {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   height: 100%;
+//   width: 100%;
+//   border: none;
+//   background: transparent;
+//   white-space: pre-wrap;
+//   line-height: 1.5em;
+//   word-wrap: break-word;
+// }
 .formSchemasEditor {
-  height: 100%;
-  width: 100%;
+  background-color: hsl(212, 35%, 95%);
   min-height: 400px;
   font-size: 16px;
+  width: 100%;
+  height: 100%;
+  margin: 10px 0;
   line-height: 22px;
   font-family: "Industry";
-  background-color: #cccccc;
   border-radius: 8px;
-  margin: 10px 0px;
   padding: 10px;
   ::placeholder {
     color: black;
   }
+  //   opacity: 1;
+  //   color: hsl(0, 0%, 40%);
+  //   resize: none;
+}
+
+.formSchemasHighlighter {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+  margin: 0;
+  overflow-y: auto;
 }

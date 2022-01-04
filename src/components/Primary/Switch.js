@@ -13,6 +13,8 @@ const Switch = (props) => {
     _setChecked((checkedState) => !checkedState);
   };
 
+  const handleInputChange = () => {};
+
   useEffect(() => {
     _setChecked(checked);
   }, [checked]);
@@ -24,7 +26,13 @@ const Switch = (props) => {
       }
       onClick={disabled ? null : handleSwitch}
     >
-      <input type="hidden" name={name} value={value} />
+      <input
+        type="hidden"
+        id={name}
+        name={name}
+        value={value || ""}
+        onChange={handleInputChange}
+      />
       <span
         className={`${styles.switchTrack} ${
           _checked ? styles.switchTrackChecked : ""

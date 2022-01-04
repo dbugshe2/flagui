@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import styles from "./ToggleGroup.module.scss";
-import Panel from "components/Container/Panel";
-import Toggle, { TogglePropTypes } from "./Toggle";
-import chevronUp from "assets/img/chevron-up.svg";
 import chevronDown from "assets/img/chevron-down.svg";
+import chevronUp from "assets/img/chevron-up.svg";
 import _ from "lodash";
-import useDidMountEffect from "hooks";
-import Button from "components/Primary/Button";
+import Toggle from "./Toggle";
+import styles from "./ToggleGroup.module.scss";
 
 const ToggleGroup = (props) => {
   const { schema, label, name, onChange, initialValues } = props;
 
   // TODO: create design and logic for ToggleGroup
+  const [fields, setFields] = useState(
+    schema?.fields || schema?.subFields || []
+  );
   const [groupCollapsed, setGroupCollapsed] = useState();
   const [groupToggleValues, setGroupToggleValues] = useState(initialValues);
 
   const _handleGroupToggle = (value) => {
     if (value[name] === "on") setGroupCollapsed(false);
-    if (value[name] === "off") setGroupCollapsed(true);
+    if (value[name] === "off") {
+      setGroupCollapsed(true);
+      setGroupToggleValues({});
+    }
   };
 
   const _handleTogglesValuesChange = (valObj) => {
@@ -28,14 +31,18 @@ const ToggleGroup = (props) => {
   };
 
   useEffect(() => {
-    if (!_.isEmpty(initialValues)) {
+    if (!_.isEmpty(groupToggleValues)) {
       setGroupCollapsed(false);
     }
-  }, [initialValues]);
+  }, [groupToggleValues]);
 
   useEffect(() => {
     if (_.isFunction(onChange)) onChange({ [`${name}`]: groupToggleValues });
   }, [groupToggleValues]);
+
+  useEffect(() => {
+    setFields(schema?.fields || schema?.subFields || []);
+  }, [schema]);
 
   return (
     <>
@@ -65,24 +72,23 @@ const ToggleGroup = (props) => {
         }`}
       >
         {/* body */}
-        {Object.entries(schema).map((toggle, toggleIndex) => {
-          let toggleName = toggle[0];
-          let toggleObj = toggle[1];
+        {fields.map((toggleObj, toggleIndex) => {
           if (_.isPlainObject(toggleObj) && !_.isEmpty(toggleObj)) {
             // non-empty plain object to render as toggle
             return (
               <Toggle
-                key={`${label}Toggle-${toggleIndex.toString()}`}
+                key={`${label}SubToggle-${toggleIndex.toString()}`}
                 onValue={toggleObj?.onValue || undefined}
                 offValue={toggleObj?.offValue || undefined}
                 label={toggleObj?.label || undefined}
-                name={toggleObj?.name || toggleName}
+                name={toggleObj?.name || undefined}
                 disabled={toggleObj?.disabled || false}
                 useNumericValue={toggleObj?.useNumericValue || false}
                 limit={toggleObj?.limit}
                 value={
-                  groupToggleValues[toggleName] ||
-                  groupToggleValues[toggleObj?.name]
+                  groupToggleValues[toggleObj?.name] ||
+                  toggleObj?.offValue ||
+                  "off"
                 }
                 onChange={_handleTogglesValuesChange}
               />

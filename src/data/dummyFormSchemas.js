@@ -1,45 +1,84 @@
-// these schemas could be from a db
+/**
+ *  mocking schemas that have been previously saved ina db
+ * loaded initally into localStorage to render the initial
+ * form structure
+ */
 
 const userSettingsSchema = {
-  users: {
-    userAdd: {
+  formName: "User",
+  formId: "user",
+  fields: [
+    {
       onValue: "enable",
       offValue: "disabled",
-      label: "User Add",
-      name: "userAdd",
+      label: "Notification",
+      name: "nofification",
     },
-    userEdit: {
-      onValue: "enable",
-      offValue: "disabled",
-      label: "User Edit",
-      name: "userEdit",
+    {
+      label: "User Management",
+      name: "userManagement",
+      subFields: [
+        {
+          onValue: "enable",
+          offValue: "disabled",
+          label: "User Add",
+          name: "userAdd",
+        },
+        {
+          onValue: "enable",
+          offValue: "disabled",
+          label: "User Edit",
+          name: "userEdit",
+        },
+        {
+          onValue: "enable",
+          offValue: "disabled",
+          label: "User Delete",
+          name: "userDelete",
+        },
+        {
+          onValue: "enable",
+          offValue: "disabled",
+          label: "User Limit",
+          useNumericValue: true,
+          limit: 10,
+          name: "userLimit",
+        },
+      ],
     },
-    userDelete: {
-      onValue: "enable",
-      offValue: "disabled",
-      label: "User Delete",
-      name: "userDelete",
-    },
-    userLimit: {
-      onValue: "enable",
-      offValue: "disabled",
-      label: "User Limit",
-      useNumericValue: true,
-      limit: 10,
-      name: "userLimit",
-    },
-  },
+  ],
 };
 
-const generalSettingsSchema = {};
-const alertSettingsSchema = {};
-const notificationSettingsSchema = {};
+const generalSettingsSchema = {
+  formName: "General",
+  formId: "general",
+  fields: [
+    {
+      label: "Case Management",
+      name: "caseManagement",
+    },
+  ],
+};
+
+const alertSettingsSchema = {
+  formName: "Alerts",
+  formId: "alerts",
+  fields: [
+    {
+      label: "Alert Manager",
+      name: "alertManager",
+    },
+    {
+      label: "Profile Managment",
+      name: "profileManagment",
+    },
+  ],
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
 const schemas = {
   userSettingsSchema,
   generalSettingsSchema,
   alertSettingsSchema,
-  notificationSettingsSchema,
 };
 export default schemas;

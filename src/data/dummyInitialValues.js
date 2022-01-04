@@ -1,6 +1,16 @@
 export const userInitialvalues = {
-  userAdd: "enable",
-  userEdit: "disable",
-  userDelete: "enable",
-  userLimit: 3,
+  notification: "disable",
+  userManagement: {
+    userAdd: "enable",
+    userEdit: "disable",
+    userDelete: "enable",
+    userLimit: 3,
+  },
+};
+export const generalInitialvalues = {
+  caseManagment: "on",
+};
+export const alertInitialvalues = {
+  alertManager: "on",
+  profileManager: "off",
 };
