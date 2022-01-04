@@ -80,9 +80,9 @@ const alertSettingsSchema = {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-const schemas = {
+const initialSchemas = {
   userSettingsSchema,
   generalSettingsSchema,
   alertSettingsSchema,
 };
-export default schemas;
+export default initialSchemas;

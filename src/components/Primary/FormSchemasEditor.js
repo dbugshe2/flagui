@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DropDown, { CustomSelect } from "./DropDown";
 import styles from "./FormSchemasEditor.module.scss";
-import Prism from "prismjs";
+import Button from "./Button";
 
 const FormSchemasEditor = (props) => {
   const { schemas, onChange } = props;
@@ -14,31 +14,28 @@ const FormSchemasEditor = (props) => {
   const handleSchemaEdit = (e) => {
     try {
       setContent(e.target.value);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleUpdateSchema = () => {
+    try {
       if (onChange) {
-        // onChange(JSON.parse(e.target.value));
+        console.log(JSON.parse(content));
+        onChange(JSON.parse(content));
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleKeyDown = (evt) => {
     try {
-      let value = content,
-        selStartPos = evt.currentTarget.selectionStart;
-
-      console.log(evt.currentTarget);
+      let value = content;
 
       // handle 4-space indent on
       if (evt.key === "Tab") {
-        // evt.preventDefault();
-        value =
-          value.substring(0, selStartPos) +
-          "    " +
-          value.substring(selStartPos, value.length);
-        evt.currentTarget.selectionStart = selStartPos + 3;
-        evt.currentTarget.selectionEnd = selStartPos + 4;
         evt.preventDefault();
-
-        setContent(value);
       }
     } catch (error) {
       console.log(error);
@@ -61,10 +58,6 @@ const FormSchemasEditor = (props) => {
       setContent(JSON.stringify(schemas[selectedSchema], null, 2));
   }, [selectedSchema]);
 
-  useEffect(() => {
-    Prism.highlightAll();
-  }, []);
-
   return (
     <div>
       <label>Select Schema</label>
@@ -82,6 +75,7 @@ const FormSchemasEditor = (props) => {
         onKeyDown={handleKeyDown}
         value={content}
       />
+      <Button onClick={handleUpdateSchema}>Update Schema</Button>
     </div>
   );
 };

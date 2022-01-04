@@ -9,7 +9,7 @@ import schemas from "data/dummyFormSchemas";
 import acorn from "acorn";
 
 const ToggleForm = (props) => {
-  const { schema = {}, initialValues = {}, onChange } = props;
+  const { schema = {}, initialValues, onChange } = props;
 
   const [formName, setFormName] = useState(schema?.formName || "");
   const [fields, setFields] = useState(schema?.fields || []);

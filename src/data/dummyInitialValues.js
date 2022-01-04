@@ -1,9 +1,9 @@
 export const userInitialvalues = {
-  notification: "disable",
+  notification: "disabled",
   userManagement: {
-    userAdd: "enable",
-    userEdit: "disable",
-    userDelete: "enable",
+    userAdd: "enabled",
+    userEdit: "disabled",
+    userDelete: "enabled",
     userLimit: 3,
   },
 };

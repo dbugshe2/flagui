@@ -5,7 +5,11 @@ import styles from "./Button.module.scss";
 const Button = (props) => {
   const { children, onClick, type } = props;
   return (
-    <button type={type || "button"} onClick={onClick ? onClick : null}>
+    <button
+      className={styles.button}
+      type={type || "button"}
+      onClick={onClick ? onClick : null}
+    >
       {children}
     </button>
   );
