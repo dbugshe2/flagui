@@ -98,10 +98,7 @@ const Toggle = (props) => {
             limit={limit}
           />
         ) : undefined}
-        <Switch
-          checked={toggleValue === onValue || numericValue > -1}
-          onChange={_handleToggle}
-        />
+        <Switch checked={toggleValue === onValue} onChange={_handleToggle} />
       </div>
     </div>
   );

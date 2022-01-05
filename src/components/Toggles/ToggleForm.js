@@ -20,6 +20,7 @@ const ToggleForm = (props) => {
   //   immediately submitForm onChange
   useEffect(() => {
     if (_.isFunction(onChange)) onChange(values);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values]);
 
   // dynamically update fields based on schema prop

@@ -16,16 +16,37 @@ import {
   generalInitialvalues,
   userInitialvalues,
 } from "data/dummyInitialValues";
-import { useFormSchema } from "hooks";
+import { useFormSchema, useToggleForm } from "hooks";
 
 function App() {
-  const [userFormData, setUserFormData] = useState({});
-  const [generalFormData, setGeneralFormData] = useState({});
-  const [alertFormData, setAlertFormData] = useState({});
+  const { values: userFormData, setValues: setUserFormData } =
+    useToggleForm(userInitialvalues);
 
-  const { schema: userSchema } = useFormSchema(initUserSchema);
-  const { schema: generalSchema } = useFormSchema(initGeneralSchema);
-  const { schema: alertSchema } = useFormSchema(initAlertSchema);
+  const { values: generalFormData, setValues: setGeneralFormData } =
+    useToggleForm(generalInitialvalues);
+
+  const { values: alertFormData, setValues: setAlertFormData } =
+    useToggleForm(alertInitialvalues);
+
+  const { schema: userSchema, setSchema: updateUserSchema } =
+    useFormSchema(initUserSchema);
+
+  const { schema: generalSchema, setSchema: updateGeneralSchema } =
+    useFormSchema(initGeneralSchema);
+
+  const { schema: alertSchema, setSchema: updateAlertSchema } =
+    useFormSchema(initAlertSchema);
+
+  const handleSchemaUpdate = (newSchema) => {
+    switch (newSchema.formId) {
+      case userSchema.formId:
+        updateUserSchema(newSchema);
+        break;
+      default:
+        console.log(newSchema);
+        break;
+    }
+  };
 
   return (
     <PageWrapper>
@@ -61,11 +82,7 @@ function App() {
         rightSide={
           <FormSchemasEditor
             schemas={[userSchema, generalSchema, alertSchema]}
-            // onChange={(newSchema) =>
-            //   setFormSchemas((oldSchemas) => {
-            //     return { ...oldSchemas, ...newSchema };
-            //   })
-            // }
+            onChange={handleSchemaUpdate}
           />
         }
       />

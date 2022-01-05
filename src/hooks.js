@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 /** useToggleForm custom hook
  *
@@ -6,12 +6,14 @@ import React, { useRef, useState } from "react";
  * @returns
  */
 export const useToggleForm = (initFormValues) => {
-  const valuesRef = useRef(initFormValues);
-
-  const setValues = (values) => {
-    valuesRef.current = values;
+  //   const valuesRef = useRef(initFormValues);
+  const [values, _setValues] = useState(initFormValues);
+  const setValues = (newValues) => {
+    // valuesRef.current = values;
+    _setValues(newValues);
   };
-  return { values: valuesRef.current, setValues };
+
+  return { values, setValues };
 };
 
 /** useFormSchema custom hook
@@ -20,11 +22,13 @@ export const useToggleForm = (initFormValues) => {
  * @returns {object}
  */
 export const useFormSchema = (initSchema) => {
-  const schemaRef = useRef(initSchema);
+  //   const schemaRef = useRef(initSchema);
+  const [schema, _setSchema] = useState(initSchema);
   const setSchema = (newSchema) => {
-    schemaRef.current = newSchema;
+    // schemaRef.current = newSchema;
+    _setSchema(newSchema);
   };
-  return { schema: schemaRef.current, setSchema };
+  return { schema: schema, setSchema };
 };
 
 /**
