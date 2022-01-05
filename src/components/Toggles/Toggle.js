@@ -11,7 +11,6 @@ const Toggle = (props) => {
     onValue = "on",
     offValue = "off",
     label,
-    disabled,
     name,
     onChange,
     value,
@@ -19,42 +18,73 @@ const Toggle = (props) => {
     limit,
   } = props;
 
-  const [toggleValue, setToggleValue] = useState();
-  const [numericValue, setNumericValue] = useState();
+  const [toggleValue, setToggleValue] = useState(value);
+
+  const [numericValue, setNumericValue] = useState(-1);
+
+  const toggleOn = () => {
+    setToggleValue(onValue);
+  };
+  const toggleOff = () => {
+    setToggleValue(offValue);
+    setNumericValue(undefined);
+  };
 
   const _handleToggle = (toggledChecked) => {
-    if (!toggledChecked) {
-      if (_.isFunction(onChange)) onChange({ [`${name}`]: `${offValue}` });
-      setToggleValue(offValue);
+    if (!useNumericValue) {
+      if (!toggledChecked) {
+        if (onChange) onChange({ [`${name}`]: `${offValue}` });
+        toggleOff();
+        return;
+      }
+
+      if (toggledChecked) {
+        if (onChange) onChange({ [`${name}`]: `${onValue}` });
+        toggleOn();
+        return;
+      }
     }
-    if (toggledChecked) {
-      // set Toggle only
-      setToggleValue(onValue);
-      // use numeric value instead
-      if (useNumericValue) return;
-      if (_.isFunction(onChange)) onChange({ [`${name}`]: `${onValue}` });
-      return;
+
+    if (useNumericValue) {
+      if (!toggledChecked) {
+        if (onChange) onChange({ [`${name}`]: `${offValue}` });
+        toggleOff();
+        return;
+      }
+
+      if (toggledChecked) {
+        // if (onChange) onChange({ [`${name}`]: `${onValue}` });
+        toggleOn();
+      }
     }
   };
 
   const _handleSetNumericValue = (val) => {
-    if (_.isFinite(val)) {
-      // update hadnler value with numeric value
-      setNumericValue(val);
-      if (_.isFunction(onChange)) onChange({ [`${name}`]: val });
-    }
-    return;
+    // update handler value with numeric value
+    setNumericValue(val);
+    if (_.isFunction(onChange)) onChange({ [`${name}`]: val });
+    // return;
   };
 
   useEffect(() => {
-    if (useNumericValue) {
-      setNumericValue(value);
-      if (_.isFinite(value)) setToggleValue(onValue);
+    if (value === onValue) {
+      toggleOn();
       return;
     }
-    if (value) setToggleValue(value);
+
+    if (value === offValue) {
+      toggleOff();
+      return;
+    }
+
+    if (useNumericValue && value > -1) {
+      setNumericValue(value);
+      toggleOn();
+      return;
+    }
+    toggleOff();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [value, numericValue]);
 
   return (
     <div className={styles.toggleWrapper}>
@@ -65,15 +95,11 @@ const Toggle = (props) => {
           <DropDown
             value={numericValue}
             onChange={_handleSetNumericValue}
-            disabled={disabled}
             limit={limit}
           />
         ) : undefined}
         <Switch
-          disabled={disabled}
-          name={name}
-          checked={toggleValue === onValue}
-          value={toggleValue}
+          checked={toggleValue === onValue || numericValue > -1}
           onChange={_handleToggle}
         />
       </div>
@@ -84,15 +110,12 @@ const Toggle = (props) => {
 export const TogglePropTypes = {
   onValue: PropTypes.string,
   offValue: PropTypes.string,
-  disabled: PropTypes.bool,
   label: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func,
   defaultValue: PropTypes.string,
   useNumericValue: PropTypes.bool,
   limit: PropTypes.number,
-  additionalValue: PropTypes.any,
-  onAdditionalValueChange: PropTypes.func,
 };
 
 Toggle.propTypes = TogglePropTypes;

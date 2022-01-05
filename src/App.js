@@ -6,18 +6,26 @@ import Row from "components/Container/Row";
 import SplitPane from "components/Container/SplitPane";
 import FormSchemasEditor from "components/Primary/FormSchemasEditor";
 import ToggleForm from "components/Toggles/ToggleForm";
-import dummyFormSchemas from "data/dummyFormSchemas";
+import {
+  initAlertSchema,
+  initGeneralSchema,
+  initUserSchema,
+} from "data/dummyFormSchemas";
 import {
   alertInitialvalues,
   generalInitialvalues,
   userInitialvalues,
 } from "data/dummyInitialValues";
+import { useFormSchema } from "hooks";
 
 function App() {
-  const [formSchemas, setFormSchemas] = useState(dummyFormSchemas);
   const [userFormData, setUserFormData] = useState({});
   const [generalFormData, setGeneralFormData] = useState({});
   const [alertFormData, setAlertFormData] = useState({});
+
+  const { schema: userSchema } = useFormSchema(initUserSchema);
+  const { schema: generalSchema } = useFormSchema(initGeneralSchema);
+  const { schema: alertSchema } = useFormSchema(initAlertSchema);
 
   return (
     <PageWrapper>
@@ -29,21 +37,21 @@ function App() {
                 <ToggleForm
                   title="User"
                   initialValues={userInitialvalues}
-                  schema={formSchemas.userSettingsSchema}
+                  schema={userSchema}
                   onChange={setUserFormData}
                 />
               </Col>
               <Col>
                 <ToggleForm
-                  schema={formSchemas.generalSettingsSchema}
-                  // initialValues={generalInitialvalues}
+                  schema={generalSchema}
+                  initialValues={generalInitialvalues}
                   onChange={setGeneralFormData}
                 />
               </Col>
               <Col>
                 <ToggleForm
-                  schema={formSchemas.alertSettingsSchema}
-                  // initialValues={alertInitialvalues}
+                  schema={alertSchema}
+                  initialValues={alertInitialvalues}
                   onChange={setAlertFormData}
                 />
               </Col>
@@ -52,34 +60,25 @@ function App() {
         }
         rightSide={
           <FormSchemasEditor
-            schemas={formSchemas}
-            onChange={(newSchema) =>
-              setFormSchemas((oldSchemas) => {
-                return { ...oldSchemas, ...newSchema };
-              })
-            }
+            schemas={[userSchema, generalSchema, alertSchema]}
+            // onChange={(newSchema) =>
+            //   setFormSchemas((oldSchemas) => {
+            //     return { ...oldSchemas, ...newSchema };
+            //   })
+            // }
           />
         }
       />
       {/* form Results */}
       <Row>
         <Col>
-          <FormResult
-            schema={formSchemas.userSettingsSchema}
-            data={userFormData}
-          />
+          <FormResult schema={userSchema} data={userFormData} />
         </Col>
         <Col>
-          <FormResult
-            schema={formSchemas.generalSettingsSchema}
-            data={generalFormData}
-          />
+          <FormResult schema={generalSchema} data={generalFormData} />
         </Col>
         <Col>
-          <FormResult
-            schema={formSchemas.alertSettingsSchema}
-            data={alertFormData}
-          />
+          <FormResult schema={alertSchema} data={alertFormData} />
         </Col>
       </Row>
     </PageWrapper>

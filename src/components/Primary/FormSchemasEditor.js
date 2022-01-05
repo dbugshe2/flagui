@@ -31,8 +31,6 @@ const FormSchemasEditor = (props) => {
 
   const handleKeyDown = (evt) => {
     try {
-      let value = content;
-
       // handle 4-space indent on
       if (evt.key === "Tab") {
         evt.preventDefault();
@@ -44,19 +42,20 @@ const FormSchemasEditor = (props) => {
   //   set schema select options
   useEffect(() => {
     if (schemas) {
-      let _schemaOptions = Object.entries(schemas).map((item, _) => ({
-        label: item[1]?.formName || item[0],
-        value: item[0],
+      let _schemaOptions = schemas.map((item, _) => ({
+        label: item?.formName,
+        value: item,
       }));
-      //   setSelectedSchema(_schemaOptions[0]);
       setSchemaOptions(_schemaOptions);
     }
   }, []);
 
   useEffect(() => {
-    if (selectedSchema)
-      setContent(JSON.stringify(schemas[selectedSchema], null, 2));
+    if (selectedSchema) setContent(JSON.stringify(selectedSchema, null, 2));
   }, [selectedSchema]);
+
+  //   console.log(selectedSchema)
+  //   console.log(content)
 
   return (
     <div>
@@ -66,7 +65,6 @@ const FormSchemasEditor = (props) => {
         placeholder="Select a schema to edit"
         onChange={(val) => setSelectedSchema(val)}
       />
-      {/* <div className={styles.formSchemasContainer}> */}
       <textarea
         className={styles.formSchemasEditor}
         autoCapitalize="none"

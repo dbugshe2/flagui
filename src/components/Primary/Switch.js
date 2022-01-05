@@ -1,57 +1,41 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./Switch.module.scss";
 import _ from "lodash";
 
 const Switch = (props) => {
-  const { disabled, name, value, checked, onChange } = props;
+  const { checked, onChange } = props;
 
-  const [_checked, _setChecked] = useState(checked);
+  const [_checked, _setChecked] = useState();
 
   const handleSwitch = () => {
-    if (_.isFunction(onChange)) onChange(!checked);
+    if (onChange) onChange(!_checked);
     _setChecked((checkedState) => !checkedState);
   };
-
-  const handleInputChange = () => {};
 
   useEffect(() => {
     _setChecked(checked);
   }, [checked]);
 
   return (
-    <label
-      className={
-        disabled ? styles.switchContainerDisabled : styles.switchContainer
-      }
-      onClick={disabled ? null : handleSwitch}
-    >
-      <input
-        type="hidden"
-        id={name}
-        name={name}
-        value={value || ""}
-        onChange={handleInputChange}
-      />
+    <span className={styles.switchContainer} onClick={handleSwitch}>
       <span
         className={`${styles.switchTrack} ${
-          _checked ? styles.switchTrackChecked : ""
+          _checked && styles.switchTrackChecked
         }`}
       ></span>
       <span
         className={`${styles.switchButton} ${
-          _checked ? styles.switchButtonChecked : ""
+          _checked && styles.switchButtonChecked
         }`}
       ></span>
-    </label>
+    </span>
   );
 };
 
 Switch.propTypes = {
-  disabled: PropTypes.bool,
-  name: PropTypes.string,
   onChange: PropTypes.func,
-  value: PropTypes.string,
+  checked: PropTypes.bool,
 };
 
 export default Switch;

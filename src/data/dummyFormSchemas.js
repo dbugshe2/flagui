@@ -4,12 +4,12 @@
  * form structure
  */
 
-const userSettingsSchema = {
+export const initUserSchema = {
   formName: "User",
   formId: "user",
   fields: [
     {
-      onValue: "enable",
+      onValue: "enabled",
       offValue: "disabled",
       label: "Notification",
       name: "notification",
@@ -19,19 +19,19 @@ const userSettingsSchema = {
       name: "userManagement",
       subFields: [
         {
-          onValue: "enable",
+          onValue: "enabled",
           offValue: "disabled",
           label: "User Add",
           name: "userAdd",
         },
         {
-          onValue: "enable",
+          onValue: "enabled",
           offValue: "disabled",
           label: "User Edit",
           name: "userEdit",
         },
         {
-          onValue: "enable",
+          onValue: "enabled",
           offValue: "disabled",
           label: "User Delete",
           name: "userDelete",
@@ -49,7 +49,7 @@ const userSettingsSchema = {
   ],
 };
 
-const generalSettingsSchema = {
+export const initGeneralSchema = {
   formName: "General",
   formId: "general",
   fields: [
@@ -60,7 +60,7 @@ const generalSettingsSchema = {
   ],
 };
 
-const alertSettingsSchema = {
+export const initAlertSchema = {
   formName: "Alerts",
   formId: "alerts",
   fields: [
@@ -80,9 +80,3 @@ const alertSettingsSchema = {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-const initialSchemas = {
-  userSettingsSchema,
-  generalSettingsSchema,
-  alertSettingsSchema,
-};
-export default initialSchemas;

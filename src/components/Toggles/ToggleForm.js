@@ -1,17 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
-import Toggle from "./Toggle";
-import _ from "lodash";
-import ToggleGroup from "./ToggleGroup";
-import Title from "components/Primary/Title";
+import React, { useEffect, useState } from "react";
 import Panel from "components/Container/Panel";
-import schemas from "data/dummyFormSchemas";
-import acorn from "acorn";
+import Title from "components/Primary/Title";
+import _ from "lodash";
+import Toggle from "./Toggle";
+import ToggleGroup from "./ToggleGroup";
 
 const ToggleForm = (props) => {
   const { schema = {}, initialValues, onChange } = props;
 
-  const [formName, setFormName] = useState(schema?.formName || "");
   const [fields, setFields] = useState(schema?.fields || []);
   const [values, setValues] = useState(initialValues);
 
@@ -26,14 +22,14 @@ const ToggleForm = (props) => {
     if (_.isFunction(onChange)) onChange(values);
   }, [values]);
 
-  //   dynamically update schema
+  // dynamically update fields based on schema prop
   useEffect(() => {
-    if (!_.isEmpty(schema) && _.isArray(schema)) setFields(schema?.fields);
+    if (schema?.fields) setFields(schema?.fields);
   }, [schema]);
 
   return (
     <>
-      {formName && <Title text={formName} />}
+      {schema?.formName && <Title text={schema?.formName} />}
       <Panel>
         {fields.length > 0 &&
           fields.map((fieldObj, fieldIndex) => {
@@ -52,10 +48,10 @@ const ToggleForm = (props) => {
             return (
               <Toggle
                 key={`Toggle-${fieldIndex.toString()}`}
-                onValue={fieldObj?.onValue || undefined}
-                offValue={fieldObj?.offValue || undefined}
-                disabled={fieldObj?.disabled || false}
-                useNumericValue={fieldObj?.useNumericValue || false}
+                onValue={fieldObj?.onValue || "on"}
+                offValue={fieldObj?.offValue || "off"}
+                useNumericValue={fieldObj?.useNumericValue}
+                value={initialValues[fieldObj?.name]}
                 limit={fieldObj?.limit}
                 label={fieldObj?.label}
                 name={fieldObj?.name}

@@ -1,10 +1,31 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
-export const useToggleForm = () => {};
+/** useToggleForm custom hook
+ *
+ * @param {object} initFormValues - initial Values of form for prefilled forms
+ * @returns
+ */
+export const useToggleForm = (initFormValues) => {
+  const valuesRef = useRef(initFormValues);
 
-export const useToggleGroup = () => {};
+  const setValues = (values) => {
+    valuesRef.current = values;
+  };
+  return { values: valuesRef.current, setValues };
+};
 
-export const useToggle = () => {};
+/** useFormSchema custom hook
+ *
+ * @param {object} initSchema - initial value of the form schema
+ * @returns {object}
+ */
+export const useFormSchema = (initSchema) => {
+  const schemaRef = useRef(initSchema);
+  const setSchema = (newSchema) => {
+    schemaRef.current = newSchema;
+  };
+  return { schema: schemaRef.current, setSchema };
+};
 
 /**
  * Identical to React.useEffect, except that it never runs on mount. This is
