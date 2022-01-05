@@ -24,6 +24,8 @@ In the project directory, you can run:
 - `npm run build`: Builds the app for production to the `build` folder.
 - `npm run eject`: Remove the single build dependency from your project.
 
+## TODO
+- Add Testing
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
