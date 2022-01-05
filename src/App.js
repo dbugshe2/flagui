@@ -42,6 +42,12 @@ function App() {
       case userSchema.formId:
         updateUserSchema(newSchema);
         break;
+      case generalSchema.formId:
+        updateGeneralSchema(newSchema);
+        break;
+      case alertSchema.formId:
+        updateAlertSchema(newSchema);
+        break;
       default:
         console.log(newSchema);
         break;
@@ -56,8 +62,7 @@ function App() {
             <Row>
               <Col>
                 <ToggleForm
-                  title="User"
-                  initialValues={userInitialvalues}
+                  initialValues={userFormData}
                   schema={userSchema}
                   onChange={setUserFormData}
                 />
@@ -65,14 +70,14 @@ function App() {
               <Col>
                 <ToggleForm
                   schema={generalSchema}
-                  initialValues={generalInitialvalues}
+                  initialValues={generalFormData}
                   onChange={setGeneralFormData}
                 />
               </Col>
               <Col>
                 <ToggleForm
                   schema={alertSchema}
-                  initialValues={alertInitialvalues}
+                  initialValues={alertFormData}
                   onChange={setAlertFormData}
                 />
               </Col>
